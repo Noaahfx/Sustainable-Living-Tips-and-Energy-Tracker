@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Library Loan System - Create Review{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="display-4 text-center">Create Review</h1>
+    <form method="POST" action="/createreviews" enctype="multipart/form-data">
+        {{ form.csrf_token }}
+
+        <div class="form-group">
+            <label for="title">Title</label>
+            {{ form.title(class="form-control", placeholder="Enter Title") }}
+        </div>
+
+        <div class="form-group">
+            <label for="content">Review Content</label>
+            {{ form.content(class="form-control", placeholder="Enter Review Content") }}
+        </div>
+
+        <div class="form-group">
+            <label for="image">Attach Relevant Image</label>
+            {{ form.image(class="form-control") }}
+        </div>
+
+        <div class="form-group">
+            <label for="rating">Rating</label>
+            {{ form.rating(class="form-control") }}
+        </div>
+
+        <!-- Add spacing above the submit button -->
+        <div class="form-group" style="margin-top: 10px;">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

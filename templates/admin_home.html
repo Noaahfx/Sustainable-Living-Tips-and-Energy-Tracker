@@ -1,0 +1,59 @@
+{% extends "base(admin).html" %}
+{% block title %}Admin Home{% endblock %}
+
+{% block content %}
+  <div class="container mt-5">
+
+    <div class="card text-center">
+      <div class="card-header">
+        <h2 class="card-title">Admin Home</h2>
+      </div>
+      <div class="card-body">
+        <p class="card-text">Welcome, Admin!</p>
+        <p class="card-text">What would you like to do?</p>
+      </div>
+    </div>
+
+    <div class="card text-center mt-3">
+      <div class="card-body">
+        <h5 class="card-title">Manage Accounts</h5>
+        <a href="{{ url_for('admin') }}" class="btn btn-success btn-block">Go to Manage Accounts</a>
+      </div>
+    </div>
+
+    <div class="card text-center mt-3">
+      <div class="card-body">
+        <h5 class="card-title">Manage Enquiries</h5>
+        <a href="{{ url_for('view_enquiries') }}" class="btn btn-success btn-block">Go to Manage Enquiries</a>
+      </div>
+    </div>
+
+    <div class="card text-center mt-3">
+      <div class="card-body">
+        <h5 class="card-title">Manage Forum</h5>
+        <a href="{{ url_for('admin_manage_forum') }}" class="btn btn-success btn-block">Go to Manage Forum</a>
+      </div>
+    </div>
+
+    <div class="card text-center mt-3">
+      <div class="card-body">
+        <h5 class="card-title">Manage Reviews</h5>
+        <a href="{{ url_for('admin_manage_reviews') }}" class="btn btn-success btn-block">Go to Manage Reviews</a>
+      </div>
+    </div>
+
+    <div class="card text-center mt-3">
+      <div class="card-body">
+        <h5 class="card-title">Manage Rewards</h5>
+        <a href="{{ url_for('retrieve_rewards') }}" class="btn btn-success btn-block">Go to Manage Rewards</a>
+      </div>
+    </div>
+    <div class="card text-center mt-3">
+      <div class="card-body">
+        <h5 class="card-title">Manage Products</h5>
+        <a href="{{ url_for('admin_product_list') }}" class="btn btn-success btn-block">Go to Manage Products</a>
+      </div>
+    </div>
+
+  </div>
+{% endblock %}

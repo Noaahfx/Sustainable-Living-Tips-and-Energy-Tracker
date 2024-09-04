@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Library Loan System - Forum Successfully Submitted{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <div class="alert alert-success" role="alert">
+      <h4 class="alert-heading">Post Successfully Posted!</h4>
+      <p>Thank you for creating a forum.</p>
+      <hr>
+      <p class="mb-0">Here are the details of the post:</p>
+      <ul>
+        <li><strong>Title:</strong> {{ title }}</li>
+        <li><strong>Content:</strong> {{ content }}</li>
+        {% if image %}
+          <li>
+            <strong>Image:</strong>
+            <img src="{{ url_for('static', filename='imageuploads/' + image) }}" alt="Forum Image" style="max-width: 100%; height: auto;">
+          </li>
+        {% else %}
+          <li><strong>Image:</strong> No image provided</li>
+        {% endif %}
+      </ul>
+    </div>
+
+    <div class="text-center mt-4">
+      <a href="/createforum" class="btn btn-primary">Create Another Forum</a>
+      <a href="/retrieveforum" class="btn btn-success">View Thread</a>
+    </div>
+  </div>
+{% endblock %}

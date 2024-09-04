@@ -1,0 +1,25 @@
+<!-- First Navigation Bar (for users not logged in) -->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark navbar-custom">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+        <!-- Logo in the middle -->
+        <a class="navbar-brand mx-auto" href="{{ url_for('admin_home') }}">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Company Logo" height="40">
+        </a>
+    </div>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav ms-auto">
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                  <img src="{{ url_for('static', filename='A.png') }}" alt="Admin Icon" style="width: 30px; height: 30px; object-fit: cover;">
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                  <li><a class="dropdown-item" href="{{ url_for('admin_home') }}">Home</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('logout') }}">Log Out</a></li>
+              </ul>
+          </li>
+      </ul>
+    </div>
+</nav>
+
+
+

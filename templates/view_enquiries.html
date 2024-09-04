@@ -1,0 +1,53 @@
+<!-- templates/view_enquiries.html -->
+{% extends "base(admin).html" %}
+{% block title %}View Enquiries{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-end p-3">
+    <a href="/admin_home" class="btn btn-success mr-2">Home</a>
+</div>
+<div class="container mt-0">
+    <h1 class="display-4 text-center">Manage Enquiries</h1>
+    <table class="table">
+        <thead>
+            <tr style="background-color: #09331a; color: #fff;">
+                <th >Username</th>
+                <th >Name</th>
+                <th >Email</th>
+                <th >Subject</th>
+                <th >Message</th>
+                <th >Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for enquiry in enquiries %}
+            <tr>
+                <td style="max-width: 150px; word-wrap: break-word;">{{ enquiry.get_username() }}</td>
+                <td style="max-width: 150px; word-wrap: break-word;">{{ enquiry.get_name() }}</td>
+                <td style="max-width: 200px; word-wrap: break-word;">{{ enquiry.get_email() }}</td>
+                <td style="max-width: 150px; word-wrap: break-word;">{{ enquiry.get_subject() }}</td>
+                <td style="max-width: 300px; word-wrap: break-word;">{{ enquiry.get_message() }}</td>
+                <td>
+                    <form id="deleteForm{{ loop.index0 }}" method="POST" action="{{ url_for('view_enquiries') }}">
+                        {{ form.csrf_token }}
+                        <input type="hidden" name="index" value="{{ loop.index0 }}">
+                        <button type="button" class="btn btn-danger" onclick="confirmDelete({{ loop.index0 }})">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function confirmDelete(index) {
+        var confirmation = confirm("Are you sure you want to delete this enquiry?");
+        if (confirmation) {
+            // If the user clicks "OK", submit the form
+            document.getElementById('deleteForm' + index).submit();
+        }
+    }
+</script>
+
+{% endblock %}

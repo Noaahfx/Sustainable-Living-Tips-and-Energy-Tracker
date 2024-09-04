@@ -1,0 +1,80 @@
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark navbar-custom">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/home">
+      <img src="{{ url_for('static', filename='logo.png') }}" alt="Company Logo" height="40">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/product_list">Store</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('electricity_tracker') }}">Energy Tracker</a>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Tips</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/quiz">Quiz</a></li>
+              </ul>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('dropdown_rewards') }}">Rewards</a>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Forum</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/createforum">Create Post</a></li>
+                <li><a class="dropdown-item" href="/retrieveforum">View Thread</a></li>
+              </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Reviews</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/createreviews">Create Review</a></li>
+                <li><a class="dropdown-item" href="/retrievereviews">View Reviews</a></li>
+              </ul>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('submit_enquiry') }}">Enquiry</a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav ms-auto">
+            <a class="nav-link" href="/view_cart">
+                <img src="{{ url_for('static', filename='Cartpng.png') }}" alt="View Cart" style="width: 30px; height: 30px; margin-right: 5px;">
+            </a>
+              {% if current_user %}
+                  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                          <img src="{{ url_for('static', filename='U.png') }}" alt="User Icon" style="width: 30px; height: 30px; object-fit: cover;">
+                          {{ current_user.get_username() }}
+                          <span class="badge bg-secondary ml-1">{{ current_user.get_points() }} Points</span>
+                      </a>
+                      <ul class="dropdown-menu dropdown-menu-end">
+                          <li><a class="dropdown-item" href="/account_settings">Account Settings</a></li>
+                          <li><a class="dropdown-item" href="/items_bought">Transaction History</a></li>
+                          <li><a class="dropdown-item" href="{{ url_for('redeemed_rewards') }}">Redeemed Rewards</a></li>
+                          <li><a class="dropdown-item" href="{{ url_for('logout') }}">Log Out</a></li>
+                      </ul>
+                  </li>
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('signup') }}">Sign Up</a>
+              </li>
+            {% endif %}
+        </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,26 @@
+<!-- templates/submission_received.html -->
+{% extends "base.html" %}
+{% block title %}Submission Received{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card text-center">
+        <div class="card-header">
+            <h1 class="display-4">Submission Received</h1>
+        </div>
+        <div class="card-body">
+            <p class="lead">Thank you for your enquiry! Here are the details you submitted:</p>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Name:</strong> <span style="word-wrap: break-word;">{{ enquiry.get_name() }}</span></li>
+                <li class="list-group-item"><strong>Email:</strong> <span style="word-wrap: break-word;">{{ enquiry.get_email() }}</span></li>
+                <li class="list-group-item"><strong>Subject:</strong> <span style="word-wrap: break-word;">{{ enquiry.get_subject() }}</span></li>
+                <li class="list-group-item"><strong>Message:</strong> <span style="word-wrap: break-word;">{{ enquiry.get_message() }}</span></li>
+            </ul>
+        </div>
+        <div class="card-footer text-center">
+            <a href="{{ url_for('submit_enquiry') }}" class="btn btn-primary">Submit Another Enquiry</a>
+            <a href="{{ url_for('home') }}" class="btn btn-success">Go Back to Home</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

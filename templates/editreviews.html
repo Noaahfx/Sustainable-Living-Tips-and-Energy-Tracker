@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Library Loan System - Update Your Review{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <h1 class="display-4 text-center">Edit Review</h1>
+
+        <form method="POST" action="{{ url_for('update_reviews', id=review.get_reviews_id()) }}" enctype="multipart/form-data">
+          <!-- Manually render CSRF token field without label -->
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+          <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" name="title" id="title" class="form-control" value="{{ form.title.data }}">
+          </div>
+          <div class="form-group">
+            <label for="content">Content:</label>
+            <textarea name="content" id="content" class="form-control">{{ form.content.data }}</textarea>
+          </div>
+          <div class="form-group">
+            <label for="image">Image:</label>
+            <input type="file" name="image" id="image" class="form-control">
+          </div>
+
+          <!-- Replace textarea with radio buttons for rating -->
+          <div class="form-group">
+              <label for="rating">Rating:</label>
+              <div>
+                  {% for choice in form.rating %}
+                      <div class="form-check">
+                          {{ choice.label(class="form-check-label") }}
+                          {{ choice(class="form-check-input") }}
+                      </div>
+                  {% endfor %}
+              </div>
+          </div>
+
+          <div class="form-group">
+            <a href="{{ url_for('retrieve_reviews') }}" class="btn btn-success">Back</a>
+            <input type="submit" value="Submit" class="btn btn-primary"/>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

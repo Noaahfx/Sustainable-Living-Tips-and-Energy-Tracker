@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Quiz Results{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="display-4">Quiz Results</h1>
+        <p class="lead">Your Score: {{ score }}/28</p>
+
+        {% for question, option in selected_options.items() %}
+            <div class="card my-3">
+                <div class="card-body">
+                    <h5 class="card-title">Your answer to Q{{ question.split('_')[1]|capitalize }}:</h5>
+                    <p class="card-text">{{ option }}</p>
+                    {% set tip_key = question + '_' + option %}
+                    <p class="card-text" style="font-size: 18px; color: black;">Tip {{ loop.index }}: {{ tips[tip_key] }}</p>
+                </div>
+            </div>
+        {% endfor %}
+
+        <a href="{{ url_for('home') }}" class="btn btn-primary">Back to Home</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,99 @@
+<!-- templates/electricity_tracker.html -->
+{% extends "base.html" %}
+{% block title %}Electricity Tracker{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="display-4 text-center">Energy Tracker</h1>
+
+    <!-- Add Entry Form -->
+    <form method="POST" action="{{ url_for('electricity_tracker') }}">
+        {{ entry_form.csrf_token }}
+        <div class="mb-3">
+            {{ entry_form.year.label }} {{ entry_form.year(class="form-control") }}
+            <small class="form-text text-muted">Enter a year between 2000 and 2024.</small>
+        </div>
+        <div class="mb-3">
+            {{ entry_form.month.label }} {{ entry_form.month(class="form-select") }}
+        </div>
+        <div class="mb-3">
+            {{ entry_form.usage.label }} {{ entry_form.usage(class="form-control") }}
+            <small class="form-text text-muted">Enter energy usage between 0 and 9999 kWh.</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Entry</button>
+    </form>
+
+    <!-- Saved Entries List -->
+    <div class="mt-4">
+        <h2>Saved Entries</h2>
+        <ul class="list-group">
+            {% for entry in entries %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        {{ entry.get_date() }} - {{ entry.get_usage() }} kWh
+                    </div>
+                    <div class="btn-group" role="group">
+                        <!-- Edit Button -->
+                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal{{ loop.index }}">
+                            Edit
+                        </button>
+                        <form method="POST" action="{{ url_for('delete_electricity_entry', index=loop.index0) }}" onsubmit="return confirm('Are you sure you want to delete this entry:\n{{ entry.get_date() }} - {{ entry.get_usage() }} kWh?');">
+                            {{ entry_form.csrf_token }}
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </li>
+
+                <!-- Edit Entry Modal -->
+                <div class="modal fade" id="editModal{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editModalLabel">Edit Entry</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Edit Entry Form -->
+                                <form method="POST" action="{{ url_for('edit_electricity_entry', index=loop.index0) }}">
+                                    {{ edit_form.csrf_token }}
+                                    <div class="mb-3">
+                                        {{ edit_form.edit_year.label }} {{ edit_form.edit_year(class="form-control", value=entry.get_year()) }}
+                                        <small class="form-text text-muted">Enter a year between 2000 and 2024.</small>
+                                    </div>
+                                    <div class="mb-3">
+                                        {{ edit_form.edit_month.label }} {{ edit_form.edit_month(class="form-select", value=entry.get_month()) }}
+                                    </div>
+                                    <div class="mb-3">
+                                        {{ edit_form.edit_usage.label }} {{ edit_form.edit_usage(class="form-control", value=entry.get_usage()) }}
+                                        <small class="form-text text-muted">Enter energy usage between 0 and 9999 kWh.</small>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- View in Graph Button -->
+    <div class="text-center mt-4">
+        <a href="{{ url_for('view_electricity_graph') }}" class="btn btn-success">View in Graph</a>
+    </div>
+
+    <!-- Flash Messages -->
+    <div class="container mt-3">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert alert-dismissible fade show mt-3" role="alert">
+                {% for message in messages %}
+                    <div>{{ message }}</div>
+                {% endfor %}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+    {% endwith %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base(admin).html' %}
+{% block title %}Admin Page{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-end p-3">
+    <a href="{{ url_for('create_reward') }}" class="btn btn-primary mr-2">Create a Reward</a>
+    <a href="/admin_home" class="btn btn-success" style="margin-left: 10px;">Home</a>
+</div>
+<div class="container mt-0">
+    <h1 class="display-4 text-center">Manage Rewards</h1>
+    <table class="table">
+        <thead style="background-color: #09331a; color: #fff;">
+            <tr>
+                <th scope="col" style="width: 5%;">Name</th>
+                <th scope="col" style="width: 10%;">Description</th>
+                <th scope="col" style="width: 5%;">Points</th>
+                <th scope="col" style="width: 10%;" class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reward in rewards_list %}
+            <tr>
+                <td class="p-2" style="max-width: 200px; overflow: hidden;">{{ reward.get_name() }}</td>
+                <td class="p-2" style="max-width: 400px; overflow: hidden;">{{ reward.get_description() }}</td>
+                <td class="p-2">{{ reward.get_points() }}</td>
+                <td class="p-2 text-center">
+                    <a href="{{ url_for('update_reward', id=reward.get_id()) }}" class="btn btn-primary">Edit Reward</a>
+                    <button class="btn btn-danger delete-btn" data-id="{{ reward.get_id() }}">Delete Reward</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- JavaScript to show confirmation dialog -->
+<script>
+    // Get all elements with class "delete-btn"
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+
+    // Add click event listener to each delete button
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Get the ID of the reward associated with the delete button
+            const rewardId = this.getAttribute('data-id');
+
+            // Show confirmation dialog
+            const confirmed = confirm('Are you sure you want to delete this reward?');
+
+            // If confirmed, redirect to delete route
+            if (confirmed) {
+                window.location.href = '/delete_reward/' + rewardId;
+            }
+        });
+    });
+</script>
+{% endblock %}

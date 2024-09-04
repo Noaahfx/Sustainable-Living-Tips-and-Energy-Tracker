@@ -1,0 +1,38 @@
+{% extends "base(admin).html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white text-center">
+                    <h2 class="mb-0">Edit Reward</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('update_reward', id=reward_id) }}">
+                        {{ form.hidden_tag() }}
+
+                        {# Add a hidden field for the 'id' attribute #}
+                        <input type="hidden" name="id" value="{{ reward_id }}">
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ form.name.data }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description:</label>
+                            <textarea class="form-control" id="description" name="description">{{ form.description.data }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="points" class="form-label">Points:</label>
+                            <input type="number" class="form-control" id="points" name="points" value="{{ form.points.data }}" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Update</button>
+                    </form>
+                    <a href="{{ url_for('retrieve_rewards') }}" class="btn btn-success mt-2 btn-block">Back to Rewards</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

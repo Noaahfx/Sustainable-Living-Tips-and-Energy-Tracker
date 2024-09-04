@@ -1,0 +1,54 @@
+{% extends "base(admin).html" %}
+
+{% block title %}Library Loan System - Retrieve Reviews{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-end p-3">
+    <a href="/admin_home" class="btn btn-success mr-2">Home</a>
+</div>
+  <div class="container mt-0">
+    <h1 class="display-4 text-center">Manage Reviews</h1>
+
+    <div class="text-center mb-3">
+      {% if count == 0 %}
+        <p>No Reviews Available.</p>
+      {% elif count == 1 %}
+        <p>There is 1 Review.</p>
+      {% else %}
+        <p>There are {{ count }} Reviews.</p>
+      {% endif %}
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+      {% for review, username in reviews_list %}
+        <div class="col mb-4">
+          <div class="card h-100">
+            {% if review.get_image() %}
+              <img src="{{ url_for('static', filename='imageuploads/' + review.get_image()) }}" alt="Review Image" class="card-img-top img-fluid">
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{ review.get_title() }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">User: {{ username }}</h6>
+              <p class="card-text">{{ review.get_content() }}</p>
+              <p class="card-text">Rating: {{ review.get_rating() }}</p> <!-- Display rating -->
+            </div>
+            <div class="card-footer">
+                <form action="{{ url_for('admin_delete_reviews', id=review.get_reviews_id()) }}" method="POST" class="d-inline" onsubmit="return confirmDeleteReview('{{ review.get_title() }}');">
+                  <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                  <input type="submit" value="Delete" class="btn btn-danger btn-sm">
+                </form>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <script>
+    function confirmDeleteReview(title) {
+      return confirm(`Are you sure you want to delete the review: ${title}?`);
+    }
+  </script>
+{% endblock %}
+
+

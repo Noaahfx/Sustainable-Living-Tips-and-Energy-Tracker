@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2>Redeemed Rewards</h2>
+
+        {% if redeemed_rewards %}
+            <ul class="list-group">
+                {% for reward in redeemed_rewards %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>{{ reward.get_name() }}</strong>
+                            <p>Points: {{ reward.get_points() }}</p>
+                        </div>
+                        <div>
+                            <form method="POST" action="{{ url_for('delete_redeemed_reward', reward_id=reward.get_id()) }}" onsubmit="return confirmDelete()">
+                                {{ form.csrf_token }}
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No redeemed rewards yet.</p>
+        {% endif %}
+    </div>
+
+    <script>
+        function confirmDelete() {
+            // Display a confirmation dialog
+            var confirmed = confirm('Are you sure you want to delete this redeemed reward?');
+
+            // Return true if the user clicked "OK", otherwise return false
+            return confirmed;
+        }
+    </script>
+{% endblock %}

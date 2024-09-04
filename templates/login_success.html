@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Login Success{% endblock %}
+{% block content %}
+  <div class="container mt-5">
+    <div class="card text-center">
+      <div class="card-header">
+        <h2 class="card-title">Login Success</h2>
+      </div>
+      <div class="card-body">
+        <p class="card-text">Welcome, {{ username }}!</p>
+        <p class="card-text">What would you like to do?</p>
+        <a href="{{ url_for('account_settings') }}" class="btn btn-primary">Account Settings</a>
+        <a href="{{ url_for('home') }}" class="btn btn-success">Home</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Library Loan System - Review Successfully Submitted{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <div class="alert alert-success" role="alert">
+      <h4 class="alert-heading">Review Successfully Posted!</h4>
+      <p>Thank you for submitting a review.</p>
+      <hr>
+      <p class="mb-0">Here are the details of the review:</p>
+      <ul>
+        <li><strong>Title:</strong> {{ title }}</li>
+        <li><strong>Content:</strong> {{ content }}</li>
+        <li><strong>Rating:</strong> {{ rating }}</li>
+        {% if image %}
+          <li>
+            <strong>Image:</strong>
+            <img src="{{ url_for('static', filename='imageuploads/' + image) }}" alt="Review Image" style="max-width: 100%; height: auto;">
+          </li>
+        {% else %}
+          <li><strong>Image:</strong> No image provided</li>
+        {% endif %}
+      </ul>
+    </div>
+
+    <div class="text-center mt-4">
+      <a href="/createreviews" class="btn btn-primary">Create Another Review</a>
+      <a href="/retrievereviews" class="btn btn-success">View Reviews</a>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Library Loan System - Create Forum{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h1 class="display-4 text-center">Create Forum Post</h1>
+    <form method="POST" action="/createforum" enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
+
+      <div class="form-group">
+        <label for="title">Title</label>
+        {{ form.title(class="form-control", placeholder="Enter Title") }}
+      </div>
+
+      <div class="form-group">
+        <label for="content">Forum Content</label>
+        {{ form.content(class="form-control", placeholder="Enter Forum Content") }}
+      </div>
+
+      <div class="form-group">
+        <label for="image">Attach Relevant Image</label>
+        {{ form.image(class="form-control", accept="image/*") }}
+      </div>
+
+      <!-- Add spacing above the submit button -->
+      <div class="form-group" style="margin-top: 10px;">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base(admin).html" %}
+
+{% block content %}
+<div class="d-flex justify-content-end p-3">
+    <a href="{{ url_for('retrieve_rewards') }}" class="btn btn-success mr-2">Back</a>
+</div>
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">Create Reward</h2>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{{ url_for('create_reward') }}">
+                {{ form.hidden_tag() }}
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name:</label>
+                    <input type="text" class="form-control" id="name" name="name" value="" required>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description:</label>
+                    <textarea class="form-control" id="description" name="description"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="points" class="form-label">Points:</label>
+                    <input type="number" class="form-control" id="points" name="points" value="" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Reward</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

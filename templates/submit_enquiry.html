@@ -1,0 +1,48 @@
+<!-- templates/submit_enquiry.html -->
+{% extends "base.html" %}
+{% block title %}Submit Enquiry{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="display-4 text-center">Submit Enquiry</h1>
+    <form method="POST" action="{{ url_for('submit_enquiry') }}">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+            {{ form.name.label(class="form-label") }}
+            {{ form.name(class="form-control") }}
+            <small class="form-text text-muted">Max characters: 50</small>
+        </div>
+        <div class="mb-3">
+            {{ form.email.label(class="form-label") }}
+            {{ form.email(class="form-control", id="email") }}
+            <button type="button" class="btn btn-success" onclick="fillUserEmail()">Use Account Email</button>
+            {% for error in form.email.errors %}
+                <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+            <small class="form-text text-muted">Max characters: 320</small>
+        </div>
+        <div class="mb-3">
+            {{ form.subject.label(class="form-label") }}
+            {{ form.subject(class="form-control") }}
+            <small class="form-text text-muted">Max characters: 50</small>
+        </div>
+        <div class="mb-3">
+            {{ form.message.label(class="form-label") }}
+            {{ form.message(class="form-control") }}
+            <small class="form-text text-muted">Max characters: 4000</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<script>
+    function fillUserEmail() {
+        // Get the user's email from the session variable
+        var user_email = '{{ session.get("user_email") }}';
+
+        // Set the value of the email input
+        document.getElementById('email').value = user_email;
+    }
+</script>
+
+{% endblock %}
